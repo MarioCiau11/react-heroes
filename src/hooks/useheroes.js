@@ -13,6 +13,7 @@ const useHeroes = () => {
         setLoading(false);
       } catch (error) {
         console.error('Error fetching heroes:', error);
+        console.error('Lee la documentación de la app para saber cómo configurar el backend');
         setLoading(false);
       }
     };

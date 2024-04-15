@@ -9,6 +9,7 @@ import Button from "@mui/material/Button";
 import HeroPage from "./HeroPage";
 import useHeroes from "../hooks/useheroes";
 import Swal from 'sweetalert2';
+import { Loading } from "../ui/Loading";
 
 const HeroList = () => {
   const { heroes, loading, deleteHero } = useHeroes();
@@ -45,7 +46,7 @@ const HeroList = () => {
   };
 
   if (loading) {
-    return <div>Cargando...</div>;
+  return <Loading />;
   }
 
   return (
