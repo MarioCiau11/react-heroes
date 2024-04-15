@@ -8,9 +8,42 @@ import TableCell from "@mui/material/TableCell";
 import Button from "@mui/material/Button";
 import HeroPage from "./HeroPage";
 import useHeroes from "../hooks/useheroes";
+import Swal from 'sweetalert2';
+import { useState } from "react";
 
 const HeroList = () => {
-  const { heroes, loading } = useHeroes();
+  const { heroes, loading, deleteHero } = useHeroes();
+
+  const handleDelete = (heroId) => {
+    Swal.fire({
+      title: '¿Estás seguro?',
+      text: '¡No podrás revertir esto!',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#d33',
+      cancelButtonColor: '#3085d6',
+      confirmButtonText: 'Sí, eliminar',
+      cancelButtonText: 'Cancelar'
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        try {
+          await deleteHero(heroId);
+          Swal.fire(
+            'Eliminado',
+            'El héroe ha sido eliminado correctamente.',
+            'success'
+          );
+        } catch (error) {
+          console.error('Error deleting hero:', error);
+          Swal.fire(
+            'Error',
+            'Ha ocurrido un error al eliminar el héroe.',
+            'error'
+          );
+        }
+      }
+    });
+  };
 
   if (loading) {
     return <div>Cargando...</div>;
@@ -59,6 +92,7 @@ const HeroList = () => {
                     </Button>
                     <Button
                       variant="contained"
+                      onClick={() => handleDelete(hero.id)}
                       sx={{ backgroundColor: "#f44336", color: "#ffffff" }}
                     >
                       Eliminar

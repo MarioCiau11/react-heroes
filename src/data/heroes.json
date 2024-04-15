@@ -143,30 +143,6 @@
       "alter_ego": "malo",
       "first_appearance": "2002",
       "characters": "prueba"
-    },
-    {
-      "id": "91a3",
-      "superhero": "Mario Bros",
-      "publisher": "hsajgdsaha",
-      "alter_ego": "bueno",
-      "first_appearance": "1900",
-      "characters": "mario bros"
-    },
-    {
-      "id": "df38",
-      "superhero": "Luigui",
-      "publisher": "Marvel",
-      "alter_ego": "luigui",
-      "first_appearance": "1900",
-      "characters": "luigui"
-    },
-    {
-      "id": "6ae0",
-      "superhero": "Mario Bros",
-      "publisher": "Marvel",
-      "alter_ego": "Malo",
-      "first_appearance": "2000",
-      "characters": "mario bros jr"
     }
   ]
 }

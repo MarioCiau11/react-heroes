@@ -20,7 +20,16 @@ const useHeroes = () => {
     fetchHeroes();
   }, []);
 
-  return { heroes, loading };
+  const deleteHero = async (heroId) => {
+    try {
+      await axios.delete(`http://localhost:3001/heroes/${heroId}`);
+      setHeroes(heroes.filter(hero => hero.id !== heroId));
+    } catch (error) {
+      console.error('Error deleting hero:', error);
+    }
+  };
+
+  return { heroes, loading, deleteHero };
 };
 
 export default useHeroes;
