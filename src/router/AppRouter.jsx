@@ -8,6 +8,7 @@ export const AppRouter = () => {
     <Routes>
       <Route path="/" element={<HeroList />} />
       <Route path="/hero/create" element={<HeroDetail />} />
+      <Route path="/hero/:id/edit" element={<HeroDetail />} />
     </Routes>
   );
 };
