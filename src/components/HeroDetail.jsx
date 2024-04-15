@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
+import Swal from 'sweetalert2';
+
 import { TextField, Button } from '@mui/material'; 
 import HeroPage from './HeroPage'; 
 
@@ -33,9 +35,47 @@ export const HeroDetail = () => {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('Datos del héroe:', hero);
+    try {
+      const response = await fetch('http://localhost:3001/heroes', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(hero),
+      });
+      if (response.ok) {
+        // Muestra un SweetAlert de éxito
+        Swal.fire({
+          icon: 'success',
+          title: '¡Héroe creado con éxito!',
+          showConfirmButton: false,
+          timer: 1500, // Cierra automáticamente después de 1.5 segundos
+        });
+        
+        // Redirigir a la lista de héroes después de crear uno nuevo
+        setTimeout(() => {
+          window.location.href = '/';
+        }, 1500); // Redirige después de 1.5 segundos
+      } else {
+        console.error('Error al crear el héroe:', response.statusText);
+        // Muestra un SweetAlert de error
+        Swal.fire({
+          icon: 'error',
+          title: '¡Oops!',
+          text: 'Hubo un error al crear el héroe',
+        });
+      }
+    } catch (error) {
+      console.error('Error de red:', error);
+      // Muestra un SweetAlert de error
+      Swal.fire({
+        icon: 'error',
+        title: '¡Oops!',
+        text: 'Hubo un error de red al intentar crear el héroe',
+      });
+    }
   };
 
   return (
