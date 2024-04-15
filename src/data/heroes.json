@@ -137,11 +137,27 @@
       "characters": "Norrin Radd"
     },
     {
-      "id": "48df",
+      "id": "14e8",
+      "superhero": "Mario Bros",
+      "publisher": "Marvel",
+      "alter_ego": "Bueno",
+      "first_appearance": "2000",
+      "characters": "mario bros jr"
+    },
+    {
+      "id": "f505",
+      "superhero": "Luigui",
+      "publisher": "Marvel",
+      "alter_ego": "bueno",
+      "first_appearance": "2000",
+      "characters": "luigui"
+    },
+    {
+      "id": "fc0f",
       "superhero": "Prueba ",
       "publisher": "Prueba",
-      "alter_ego": "malo",
-      "first_appearance": "2002",
+      "alter_ego": "Bueno",
+      "first_appearance": "2000",
       "characters": "prueba"
     }
   ]

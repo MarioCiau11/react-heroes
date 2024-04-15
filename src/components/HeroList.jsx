@@ -9,7 +9,6 @@ import Button from "@mui/material/Button";
 import HeroPage from "./HeroPage";
 import useHeroes from "../hooks/useheroes";
 import Swal from 'sweetalert2';
-import { useState } from "react";
 
 const HeroList = () => {
   const { heroes, loading, deleteHero } = useHeroes();

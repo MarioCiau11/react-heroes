@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import Swal from 'sweetalert2';
+import axios from 'axios'; // Importa Axios
 
 import { TextField, Button } from '@mui/material'; 
 import HeroPage from './HeroPage'; 
@@ -16,15 +17,20 @@ export const HeroDetail = () => {
   });
 
   useEffect(() => {
-    if (id) {
-      setHero({
-        superhero: 'Batman',
-        publisher: 'DC Comics',
-        alter_ego: 'Bruce Wayne',
-        first_appearance: 'Detective Comics #27',
-        characters: 'Bruce Wayne',
-      });
-    }
+    const fetchData = async () => {
+      try {
+        if (id) {
+          // Realiza una solicitud GET al servidor para obtener los detalles del héroe correspondiente al ID
+          const response = await axios.get(`http://localhost:3001/heroes/${id}`);
+          // Establece el estado del héroe con los detalles obtenidos
+          setHero(response.data);
+        }
+      } catch (error) {
+        console.error('Error fetching hero details:', error);
+      }
+    };
+
+    fetchData();
   }, [id]);
 
   const handleChange = (e) => {
@@ -38,46 +44,46 @@ export const HeroDetail = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch('http://localhost:3001/heroes', {
-        method: 'POST',
+      const url = id ? `http://localhost:3001/heroes/${id}` : 'http://localhost:3001/heroes';
+      const method = id ? 'PUT' : 'POST';
+      const response = await axios({
+        method,
+        url,
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(hero),
+        data: hero,
       });
-      if (response.ok) {
-        // Muestra un SweetAlert de éxito
+      if (response.status === 200 || response.status === 201) {
+        const message = id ? '¡Héroe actualizado con éxito!' : '¡Héroe creado con éxito!';
         Swal.fire({
           icon: 'success',
-          title: '¡Héroe creado con éxito!',
-          text: 'El héroe ha sido creado correctamente',
+          title: message,
+          text: 'El héroe ha sido actualizado correctamente',
           showConfirmButton: false,
-          timer: 1500, // Cierra automáticamente después de 1.5 segundos
+          timer: 1500,
         });
-        
-        // Redirigir a la lista de héroes después de crear uno nuevo
         setTimeout(() => {
           window.location.href = '/';
-        }, 1500); // Redirige después de 1.5 segundos
+        }, 1500);
       } else {
-        console.error('Error al crear el héroe:', response.statusText);
-        // Muestra un SweetAlert de error
+        console.error('Error:', response.statusText);
         Swal.fire({
           icon: 'error',
           title: '¡Oops!',
-          text: 'Hubo un error al crear el héroe',
+          text: 'Hubo un error al guardar los cambios',
         });
       }
     } catch (error) {
-      console.error('Error de red:', error);
-      // Muestra un SweetAlert de error
+      console.error('Network error:', error);
       Swal.fire({
         icon: 'error',
         title: '¡Oops!',
-        text: 'Hubo un error de red al intentar crear el héroe',
+        text: 'Hubo un error de red al intentar guardar los cambios',
       });
     }
   };
+
 
   return (
     <HeroPage title={id ? 'Editar Héroe' : 'Crear Nuevo Héroe'}>
@@ -129,6 +135,14 @@ export const HeroDetail = () => {
         />
         <Button type="submit" variant="contained" color="primary">
           {id ? 'Guardar Cambios' : 'Crear Héroe'}
+        </Button>
+        {/* //agregar un botón para cancelar la acción */}
+        <Button
+          variant="contained"
+            sx={{ marginLeft: '10px', background: 'red' }}
+          onClick={() => window.history.back()}
+        >
+          Cancelar
         </Button>
       </form>
     </HeroPage>
