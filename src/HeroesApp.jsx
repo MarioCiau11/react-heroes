@@ -1,6 +1,10 @@
+import { AppRouter } from "./router/AppRouter"
+import { AppTheme } from "./theme/AppTheme"
 
 export const HeroesApp = () => {
-  return (
-    <div>HeroesApp</div>
-  )
+    return (
+        <AppTheme>
+            <AppRouter />
+        </AppTheme>
+    )
 }
