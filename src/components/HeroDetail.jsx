@@ -50,6 +50,7 @@ export const HeroDetail = () => {
         Swal.fire({
           icon: 'success',
           title: '¡Héroe creado con éxito!',
+          text: 'El héroe ha sido creado correctamente',
           showConfirmButton: false,
           timer: 1500, // Cierra automáticamente después de 1.5 segundos
         });
